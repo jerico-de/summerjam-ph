@@ -81,8 +81,8 @@ h4 {
   font-family: 'Sora', sans-serif;
   font-size: clamp(26px, 3.6vw, 36px);
   font-weight: 700;
-  line-height: 1.15;
-  letter-spacing: -0.01em;
+  line-height: 1.05;
+  letter-spacing: 0.01em;
 }
 
 .note {
@@ -98,17 +98,16 @@ h4 {
   display: flex;
   align-items: center;
   justify-content: center;
-
   padding: 12px;
-
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
 
-  background: linear-gradient(
-    135deg,
-    rgba(246, 238, 225, 0.035),
-    rgba(246, 238, 225, 0.01)
-  );
+  background:
+    linear-gradient(
+      135deg,
+      rgba(246, 238, 225, 0.035),
+      rgba(246, 238, 225, 0.01)
+    );
 
   color: var(--text-faint);
   font-size: 13px;
@@ -131,7 +130,8 @@ h4 {
   transition:
     opacity 0.15s ease,
     transform 0.15s ease,
-    border-color 0.15s ease;
+    border-color 0.15s ease,
+    background-color 0.15s ease;
 }
 
 .btn:hover {
@@ -328,12 +328,13 @@ header.hero {
   inset: 0;
   z-index: -2;
 
-  background: linear-gradient(
-    180deg,
-    rgba(0, 0, 0, 0.88) 0%,
-    rgba(0, 0, 0, 0.72) 45%,
-    rgba(0, 0, 0, 0.92) 100%
-  );
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.88) 0%,
+      rgba(0, 0, 0, 0.72) 45%,
+      rgba(0, 0, 0, 0.92) 100%
+    );
 }
 
 .hero::after {
@@ -342,7 +343,7 @@ header.hero {
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  
+
   background:
     radial-gradient(
       600px circle at 5% 10%,
@@ -366,9 +367,10 @@ header.hero {
   z-index: 1;
 }
 
-/* ---------------------------------------------------------
-   Hero Intro
---------------------------------------------------------- */
+
+/* =========================================================
+   HERO INTRO
+========================================================= */
 
 .hero-flags {
   margin-bottom: 22px;
@@ -388,9 +390,9 @@ header.hero {
   color: var(--text-faint);
 }
 
-/* ---------------------------------------------------------
-   Hero Heading
---------------------------------------------------------- */
+/* =========================================================
+   HERO HEADING
+========================================================= */
 
 .hero h1 {
   max-width: 900px;
@@ -408,20 +410,21 @@ header.hero {
 }
 
 .hero h1 .accent {
-  background: linear-gradient(
-    90deg,
-    var(--marigold),
-    var(--magenta)
-  );
+  background:
+    linear-gradient(
+      90deg,
+      var(--marigold),
+      var(--magenta)
+    );
 
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
-/* ---------------------------------------------------------
-   Hero Description
---------------------------------------------------------- */
+/* =========================================================
+   HERO DESCRIPTION
+========================================================= */
 
 .hero-sub {
   max-width: 580px;
@@ -432,9 +435,9 @@ header.hero {
   animation: fadeUp 0.7s ease 0.2s both;
 }
 
-/* ---------------------------------------------------------
-   Hero CTA
---------------------------------------------------------- */
+/* =========================================================
+   HERO CTA
+========================================================= */
 
 .hero-cta {
   display: flex;
@@ -450,9 +453,9 @@ header.hero {
   -webkit-backdrop-filter: blur(8px);
 }
 
-/* ---------------------------------------------------------
-   Hero Stats
---------------------------------------------------------- */
+/* =========================================================
+   HERO STATS
+========================================================= */
 
 .hero-stats {
   display: grid;
@@ -511,30 +514,30 @@ header.hero {
 }
 
 .hero-stat .lbl {
-  display: block; 
+  display: block;
   margin-top: 4px;
   color: var(--text-faint);
   font-size: 12px;
   line-height: 1.4;
 }
 
-/* ---------------------------------------------------------
-   Hero Media
---------------------------------------------------------- */
+/* =========================================================
+   HERO MEDIA
+========================================================= */
 
 .hero-media {
   max-width: 900px;
   height: 300px;
   margin: 42px auto 0;
   border-radius: var(--radius);
-
-  background: linear-gradient(
-    135deg,
-    rgba(242, 169, 58, 0.08),
-    rgba(228, 72, 122, 0.05)
-  );
-
-  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.30);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(242, 169, 58, 0.08),
+      rgba(228, 72, 122, 0.05)
+    );
+  box-shadow:
+    0 25px 80px rgba(0, 0, 0, 0.30);
   animation: fadeUp 0.8s ease 0.5s both;
 }
 
@@ -543,40 +546,105 @@ header.hero {
 ========================================================= */
 
 section {
-  padding: 100px 0;
+  padding: 82px 0;
 }
 
 section.alt {
   background: var(--bg-alt);
 }
 
+/* =========================================================
+   JEEPNEY-STYLE SECTION HEADERS
+========================================================= */
+
 .section-head {
   position: relative;
-  max-width: 600px;
-  margin: 0 auto 48px;
-  padding-top: 22px;
+
+  max-width: 680px;
+
+  margin: 0 auto 42px;
+  padding: 0;
+
   text-align: center;
+}
+
+.section-head .eyebrow {
+  position: relative;
+  display: inline-block;
+  padding: 13px 28px 12px;
+  color: #fff8eb;
+  font-family: 'Gasoek One', 'Sora', sans-serif;
+  font-size: clamp(25px, 4vw, 38px);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  background:
+    linear-gradient(
+      180deg,
+      #161616 0%,
+      #050505 100%
+    );
+  border: 2px solid var(--marigold);
+  box-shadow:
+    0 0 0 4px #050505,
+    0 0 0 5px rgba(242, 169, 58, 0.25),
+    0 8px 25px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  text-shadow:
+    2px 2px 0 #000,
+    0 0 12px rgba(242, 169, 58, 0.12);
+  transform: rotate(-0.6deg);
+}
+
+.section-head .eyebrow::before,
+.section-head .eyebrow::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  transform: translateY(-50%);
+  border: 1px solid var(--marigold);
+  border-radius: 50%;
+  background: #050505;
+  box-shadow:
+    0 0 8px rgba(242, 169, 58, 0.25);
+}
+
+.section-head .eyebrow::before {
+  left: 8px;
+}
+
+.section-head .eyebrow::after {
+  right: 8px;
 }
 
 .section-head::before {
   content: '';
   position: absolute;
-  top: 0;
   left: 50%;
-  width: 40px;
+  bottom: -10px;
+  width: 72px;
   height: 3px;
   transform: translateX(-50%);
   border-radius: 2px;
 
-  background: linear-gradient(
-    90deg,
-    var(--marigold),
-    var(--magenta)
-  );
+  background:
+    linear-gradient(
+      90deg,
+      var(--marigold),
+      var(--magenta),
+      var(--purple)
+    );
+
+  box-shadow:
+    0 0 12px rgba(242, 169, 58, 0.15);
 }
 
 .section-head p {
-  margin-top: 14px;
+  max-width: 600px;
+  margin: 26px auto 0;
   color: var(--text-muted);
   font-size: 16px;
 }
@@ -598,9 +666,9 @@ section.alt {
   transform: translateY(0);
 }
 
-/* ---------------------------------------------------------
-   Reveal Delays
---------------------------------------------------------- */
+/* =========================================================
+   REVEAL DELAYS
+========================================================= */
 
 .merch-grid .merch-card:nth-child(1) {
   transition-delay: 0s;
@@ -612,37 +680,6 @@ section.alt {
 
 .merch-grid .merch-card:nth-child(3) {
   transition-delay: 0.16s;
-}
-
-.partner-logos.reveal {
-  transition-delay: 0s;
-}
-
-.partner-logos .ph-block {
-  transition:
-    opacity 0.5s ease,
-    transform 0.5s ease;
-}
-
-.partner-logos:not(.in-view) .ph-block {
-  opacity: 0;
-  transform: translateY(14px);
-}
-
-.partner-logos.in-view .ph-block:nth-child(1) {
-  transition-delay: 0s;
-}
-
-.partner-logos.in-view .ph-block:nth-child(2) {
-  transition-delay: 0.08s;
-}
-
-.partner-logos.in-view .ph-block:nth-child(3) {
-  transition-delay: 0.16s;
-}
-
-.partner-logos.in-view .ph-block:nth-child(4) {
-  transition-delay: 0.24s;
 }
 
 /* =========================================================
@@ -725,9 +762,9 @@ section.alt {
   transform: translateX(0);
 }
 
-/* ---------------------------------------------------------
-   About Text
---------------------------------------------------------- */
+/* =========================================================
+   ABOUT TEXT
+========================================================= */
 
 .role-tag {
   display: inline-block;
@@ -805,9 +842,9 @@ section.alt {
   font-size: 13px;
 }
 
-/* ---------------------------------------------------------
-   Winner Videos
---------------------------------------------------------- */
+/* =========================================================
+   WINNER VIDEOS
+========================================================= */
 
 .winner-vid {
   position: relative;
@@ -870,9 +907,23 @@ section.alt {
   font-weight: 500;
 }
 
-/* ---------------------------------------------------------
-   Winner Controls
---------------------------------------------------------- */
+/* =========================================================
+   YOUTUBE IFRAME
+========================================================= */
+
+.winner-vid iframe {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  border: 0;
+}
+
+/* =========================================================
+   WINNER CONTROLS
+========================================================= */
 
 .winner-controls {
   display: none;
@@ -1115,26 +1166,133 @@ section.alt {
    PARTNERS
 ========================================================= */
 
-@keyframes ctaPulse {
-  0%,
-  100% {
-    box-shadow: 0 0 0 0 rgba(242, 169, 58, 0);
-  }
-
-  50% {
-    box-shadow: 0 0 24px 2px rgba(242, 169, 58, 0.12);
-  }
-}
-
 .partner-logos {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 16px;
-  margin-bottom: 44px;
+  margin: 22px 0 42px;
 }
 
 .partner-logos .ph-block {
-  height: 76px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 110px;
+  padding: 20px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #111;
+  opacity: 1;
+  transition:
+    opacity 0.5s ease,
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    background-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+/* ---------------------------------------------------------
+   Logo images — BLACK & WHITE DEFAULT
+--------------------------------------------------------- */
+
+.partner-logos .ph-block img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  filter:
+    grayscale(100%)
+    brightness(1.15);
+  opacity: 0.72;
+  transform: scale(0.88);
+  transition:
+    filter 0.3s ease,
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+
+/* ---------------------------------------------------------
+   Partner card hover
+--------------------------------------------------------- */
+
+.partner-logos .ph-block:hover {
+  transform: translateY(-4px);
+  border-color: var(--marigold);
+  background: #151515;
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.35),
+    0 0 18px rgba(242, 169, 58, 0.08);
+}
+
+/* ---------------------------------------------------------
+   Logo Color Hover
+--------------------------------------------------------- */
+
+.partner-logos .ph-block:hover img {
+  filter: grayscale(0%) brightness(1);
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ---------------------------------------------------------
+   Reveal animation
+--------------------------------------------------------- */
+
+.partner-logos.reveal {
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
+}
+
+.partner-logos:not(.in-view) .ph-block {
+  opacity: 0;
+  transform: translateY(14px);
+}
+
+.partner-logos.in-view .ph-block {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.partner-logos.in-view .ph-block:nth-child(1) {
+  transition-delay: 0s;
+}
+
+.partner-logos.in-view .ph-block:nth-child(2) {
+  transition-delay: 0.08s;
+}
+
+.partner-logos.in-view .ph-block:nth-child(3) {
+  transition-delay: 0.16s;
+}
+
+.partner-logos.in-view .ph-block:nth-child(4) {
+  transition-delay: 0.24s;
+}
+
+.partner-logos.in-view .ph-block:hover {
+  transform: translateY(-4px);
+}
+
+/* =========================================================
+   PARTNER CTA
+========================================================= */
+
+@keyframes ctaPulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 0 rgba(242, 169, 58, 0);
+  }
+
+  50% {
+    box-shadow:
+      0 0 24px 2px rgba(242, 169, 58, 0.12);
+  }
 }
 
 .partner-cta {
@@ -1146,11 +1304,12 @@ section.alt {
   padding: 34px 36px;
   border: 1px solid var(--marigold);
   border-radius: var(--radius);
-  background: linear-gradient(
-    135deg,
-    rgba(242, 169, 58, 0.10),
-    rgba(228, 72, 122, 0.06)
-  );
+  background:
+    linear-gradient(
+      135deg,
+      rgba(242, 169, 58, 0.10),
+      rgba(228, 72, 122, 0.06)
+    );
 
   opacity: 0;
   transform: translateY(18px);
@@ -1162,7 +1321,8 @@ section.alt {
 .partner-cta.in-view {
   opacity: 1;
   transform: translateY(0);
-  animation: ctaPulse 3.4s ease-in-out 0.6s infinite;
+  animation:
+    ctaPulse 3.4s ease-in-out 0.6s infinite;
 }
 
 .partner-cta h3 {
@@ -1314,16 +1474,12 @@ footer .note {
 
 @media (max-width: 820px) {
 
-  /* -------------------------------------------------------
-     Base
-  ------------------------------------------------------- */
-
   .wrap {
     padding: 0 24px;
   }
 
   section {
-    padding: 76px 0;
+    padding: 68px 0;
   }
 
   /* -------------------------------------------------------
@@ -1373,7 +1529,6 @@ footer .note {
   .hero-sub {
     max-width: 500px;
     margin-top: 20px;
-
     font-size: 15px;
     line-height: 1.65;
   }
@@ -1410,6 +1565,24 @@ footer .note {
   .hero-media {
     height: 220px;
     margin-top: 28px;
+  }
+
+  /* -------------------------------------------------------
+     Section Headers
+  ------------------------------------------------------- */
+
+  .section-head {
+    margin-bottom: 38px;
+  }
+
+  .section-head .eyebrow {
+    padding: 11px 23px 10px;
+    font-size: clamp(23px, 7vw, 32px);
+  }
+
+  .section-head p {
+    margin-top: 24px;
+    font-size: 15px;
   }
 
   /* -------------------------------------------------------
@@ -1501,6 +1674,12 @@ footer .note {
 
   .partner-logos {
     grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .partner-logos .ph-block {
+    height: 95px;
+    padding: 15px;
   }
 
   .partner-cta-actions {
@@ -1527,6 +1706,10 @@ footer .note {
     padding: 0 20px;
   }
 
+  section {
+    padding: 60px 0;
+  }
+
   header.hero {
     padding-top: 64px;
   }
@@ -1541,7 +1724,6 @@ footer .note {
 
   .hero-cta {
     flex-direction: column;
-
     max-width: 260px;
     margin-right: auto;
     margin-left: auto;
@@ -1566,7 +1748,48 @@ footer .note {
     flex-basis: 30px;
   }
 
+  /* -------------------------------------------------------
+     Jeepney placard mobile
+  ------------------------------------------------------- */
+
+  .section-head .eyebrow {
+    padding: 10px 19px 9px;
+    font-size: clamp(21px, 8vw, 29px);
+    box-shadow:
+      0 0 0 3px #050505,
+      0 0 0 4px rgba(242, 169, 58, 0.25),
+      0 6px 18px rgba(0, 0, 0, 0.45),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  }
+
+  .section-head .eyebrow::before {
+    left: 6px;
+  }
+
+  .section-head .eyebrow::after {
+    right: 6px;
+  }
+
+  /* -------------------------------------------------------
+     Partners
+  ------------------------------------------------------- */
+
   .partner-logos {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .partner-logos .ph-block {
+    height: 88px;
+    padding: 12px;
+    border-radius: 10px;
+  }
+
+  .partner-logos .ph-block img {
+    transform: scale(0.86);
+  }
+
+  .partner-logos .ph-block:hover img {
+    transform: scale(1);
   }
 }
