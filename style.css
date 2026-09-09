@@ -101,14 +101,12 @@ h4 {
   padding: 12px;
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
-
   background:
     linear-gradient(
       135deg,
       rgba(246, 238, 225, 0.035),
       rgba(246, 238, 225, 0.01)
     );
-
   color: var(--text-faint);
   font-size: 13px;
   text-align: center;
@@ -314,12 +312,10 @@ header.hero {
   position: absolute;
   inset: 0;
   z-index: -3;
-
   background:
     url("assets/_DSC6072.jpg")
     center center / cover
     no-repeat;
-
   transform: scale(1.02);
 }
 
@@ -327,7 +323,6 @@ header.hero {
   position: absolute;
   inset: 0;
   z-index: -2;
-
   background:
     linear-gradient(
       180deg,
@@ -343,7 +338,6 @@ header.hero {
   inset: 0;
   z-index: -1;
   pointer-events: none;
-
   background:
     radial-gradient(
       600px circle at 5% 10%,
@@ -366,7 +360,6 @@ header.hero {
   position: relative;
   z-index: 1;
 }
-
 
 /* =========================================================
    HERO INTRO
@@ -416,7 +409,6 @@ header.hero {
       var(--marigold),
       var(--magenta)
     );
-
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -430,8 +422,11 @@ header.hero {
   max-width: 580px;
   margin: 24px auto 0;
   color: rgba(245, 239, 228, 0.72);
-  font-size: 17px;
-  line-height: 1.7;
+  font-family: 'Sora', sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.75;
+  letter-spacing: 0.01em;
   animation: fadeUp 0.7s ease 0.2s both;
 }
 
@@ -472,7 +467,6 @@ header.hero {
   box-shadow:
     0 20px 60px rgba(0, 0, 0, 0.35),
     inset 0 1px 0 rgba(255, 255, 255, 0.04);
-
   animation: fadeUp 0.7s ease 0.4s both;
 }
 
@@ -526,9 +520,13 @@ header.hero {
 ========================================================= */
 
 .hero-media {
-  max-width: 900px;
-  height: 300px;
-  margin: 42px auto 0;
+  position: relative;
+  width: 100%;
+  max-width: 760px;
+  height: 360px;
+  margin: 34px auto 0;
+  overflow: hidden;
+  border: 1px solid rgba(246, 238, 225, 0.12);
   border-radius: var(--radius);
   background:
     linear-gradient(
@@ -537,8 +535,16 @@ header.hero {
       rgba(228, 72, 122, 0.05)
     );
   box-shadow:
-    0 25px 80px rgba(0, 0, 0, 0.30);
+    0 20px 60px rgba(0, 0, 0, 0.30);
   animation: fadeUp 0.8s ease 0.5s both;
+}
+
+.hero-media video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.82;
 }
 
 /* =========================================================
@@ -554,17 +560,17 @@ section.alt {
 }
 
 /* =========================================================
-   JEEPNEY-STYLE SECTION HEADERS
+   SECTION HEADERS
 ========================================================= */
 
 .section-head {
   position: relative;
-
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   max-width: 680px;
-
   margin: 0 auto 42px;
   padding: 0;
-
   text-align: center;
 }
 
@@ -595,41 +601,16 @@ section.alt {
     2px 2px 0 #000,
     0 0 12px rgba(242, 169, 58, 0.12);
   transform: rotate(-0.6deg);
-}
-
-.section-head .eyebrow::before,
-.section-head .eyebrow::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  width: 7px;
-  height: 7px;
-  transform: translateY(-50%);
-  border: 1px solid var(--marigold);
-  border-radius: 50%;
-  background: #050505;
-  box-shadow:
-    0 0 8px rgba(242, 169, 58, 0.25);
-}
-
-.section-head .eyebrow::before {
-  left: 8px;
-}
-
-.section-head .eyebrow::after {
-  right: 8px;
+  order: 1;
 }
 
 .section-head::before {
   content: '';
-  position: absolute;
-  left: 50%;
-  bottom: -10px;
+  order: 2;
   width: 72px;
   height: 3px;
-  transform: translateX(-50%);
+  margin-top: 22px;
   border-radius: 2px;
-
   background:
     linear-gradient(
       90deg,
@@ -637,12 +618,11 @@ section.alt {
       var(--magenta),
       var(--purple)
     );
-
-  box-shadow:
-    0 0 12px rgba(242, 169, 58, 0.15);
+  box-shadow: 0 0 12px rgba(242, 169, 58, 0.15);
 }
 
 .section-head p {
+  order: 3;
   max-width: 600px;
   margin: 26px auto 0;
   color: var(--text-muted);
@@ -719,18 +699,58 @@ section.alt {
   order: 1;
 }
 
+/* ---------------------------------------------------------
+   About Images
+--------------------------------------------------------- */
+
 .about-entry .entry-media .ph-block {
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  padding: 0;
 }
 
 .about-entry .entry-media.compact .ph-block {
-  width: 100%;
-  max-width: 260px;
+  width: min(100%, 260px);
+  aspect-ratio: 1 / 1;
   margin: 0 auto;
-  aspect-ratio: 1;
+  padding: 0;
+  overflow: hidden;
   border-radius: 50%;
 }
+
+.about-entry .entry-media .ph-block img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  object-position: center;
+}
+
+.about-entry .entry-media.compact .ph-block img {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 50%;
+}
+
+.about-entry .entry-media .ph-block.contain {
+  padding: 20px;
+  background: var(--surface);
+}
+
+.about-entry .entry-media .ph-block.contain img {
+  width: 80%;
+  height: 80%;
+  object-fit: contain;
+}
+
+/* ---------------------------------------------------------
+   About Animation
+--------------------------------------------------------- */
 
 .about-entry .entry-media,
 .about-entry .entry-body {
@@ -808,10 +828,20 @@ section.alt {
 .winner-block {
   padding: 36px 0;
   border-bottom: 1px solid var(--line);
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
 }
 
 .winner-block:first-child {
   border-top: 1px solid var(--line);
+}
+
+.winner-block.in-view {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .winner-block .year {
@@ -842,32 +872,27 @@ section.alt {
   font-size: 13px;
 }
 
-/* =========================================================
-   WINNER VIDEOS
-========================================================= */
+/* ---------------------------------------------------------
+   Winner Media
+--------------------------------------------------------- */
 
 .winner-vid {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
   overflow: hidden;
+  width: 100%;
   aspect-ratio: 16 / 9;
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
   background: var(--surface);
   color: var(--text-muted);
-  font-size: 13.5px;
-  font-weight: 500;
+  text-decoration: none;
   transition:
-    border-color 0.15s ease,
-    color 0.15s ease;
-}
-
-.winner-vid:hover {
-  border-color: var(--marigold);
-  color: var(--text);
+    transform 0.35s ease,
+    border-color 0.25s ease,
+    box-shadow 0.35s ease;
 }
 
 .winner-vid img {
@@ -876,49 +901,82 @@ section.alt {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition:
+    transform 0.5s ease,
+    filter 0.35s ease;
+}
+
+.winner-vid:hover {
+  transform: translateY(-4px);
+  border-color: var(--marigold);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+.winner-vid:hover img {
+  transform: scale(1.035);
 }
 
 .winner-vid::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.556);
+  background: rgba(0, 0, 0, 0.42);
+  transition: background 0.3s ease;
+}
+
+.winner-vid:hover::after {
+  background: rgba(0, 0, 0, 0.55);
 }
 
 .winner-vid .dot-play,
 .winner-vid .video-label {
   position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 
 .winner-vid .dot-play {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 26px;
-  height: 26px;
-  border: 1px solid var(--line);
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(255, 255, 255, 0.75);
   border-radius: 50%;
-  font-size: 11px;
+  color: #fff;
+  font-size: 12px;
+  transition:
+    transform 0.3s ease,
+    background 0.3s ease;
+}
+
+.winner-vid:hover .dot-play {
+  transform: scale(1.1);
+  background: rgba(255, 255, 255, 0.12);
 }
 
 .winner-vid .video-label {
+  margin-left: 8px;
+  color: #fff;
   font-size: 13.5px;
   font-weight: 500;
+  transition: transform 0.3s ease;
 }
 
-/* =========================================================
-   YOUTUBE IFRAME
-========================================================= */
+.winner-vid:hover .video-label {
+  transform: translateX(2px);
+}
 
 .winner-vid iframe {
   position: absolute;
   inset: 0;
-
+  z-index: 3;
   width: 100%;
   height: 100%;
-
   border: 0;
+}
+
+.winner-vid:not(a)::after {
+  content: none;
 }
 
 /* =========================================================
@@ -943,13 +1001,15 @@ section.alt {
   font-size: 15px;
   cursor: pointer;
   transition:
-    border-color 0.15s ease,
-    color 0.15s ease;
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .winner-controls button:hover {
   border-color: var(--marigold);
   color: var(--marigold);
+  transform: translateY(-2px);
 }
 
 .winner-dots {
@@ -962,14 +1022,24 @@ section.alt {
   height: 7px;
   border-radius: 50%;
   background: var(--line);
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
 }
 
 .winner-dots .dot.active {
   background: var(--marigold);
+  transform: scale(1.2);
+}
+
+.winners-cta {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
 }
 
 /* =========================================================
-   COMPETITION / WORKSHOPS
+   COMPETITION
 ========================================================= */
 
 .event-card {
@@ -1013,6 +1083,163 @@ section.alt {
 .meta-row div span {
   color: var(--text-faint);
   font-size: 12.5px;
+}
+
+.competition-status,
+.ticket-notice {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--marigold);
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.competition-status {
+  margin-top: 22px;
+}
+
+.competition-status .status-dot,
+.ticket-notice .status-dot {
+  width: 7px;
+  height: 7px;
+  flex: 0 0 7px;
+  border-radius: 50%;
+  background: var(--marigold);
+  box-shadow:
+    0 0 10px rgba(242, 169, 58, 0.5);
+}
+
+/* =========================================================
+   FINALISTS
+========================================================= */
+
+.finalists-section {
+  margin-top: 16px;
+}
+
+.finalists-heading {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 48px;
+}
+
+.finalists-heading .eyebrow {
+  position: relative;
+  display: inline-block;
+  padding: 10px 22px 9px;
+  color: #fff8eb;
+  font-family: 'Gasoek One', 'Sora', sans-serif;
+  font-size: clamp(20px, 3vw, 28px);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  background:
+    linear-gradient(
+      180deg,
+      #161616 0%,
+      #050505 100%
+    );
+  border: 2px solid var(--marigold);
+  box-shadow:
+    0 0 0 3px #050505,
+    0 0 0 4px rgba(242, 169, 58, 0.20),
+    0 6px 20px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  text-shadow: 2px 2px 0 #000;
+  transform: rotate(-0.5deg);
+}
+
+.finalists-heading .eyebrow::before,
+.finalists-heading .eyebrow::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  transform: translateY(-50%);
+  border: 1px solid var(--marigold);
+  border-radius: 50%;
+  background: #050505;
+}
+
+.finalists-heading .eyebrow::before {
+  left: 7px;
+}
+
+.finalists-heading .eyebrow::after {
+  right: 7px;
+}
+
+.finalists-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 64px;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  border-top: 1px solid var(--line);
+}
+
+.finalist {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  align-items: center;
+  min-width: 0;
+  min-height: 74px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--line);
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.55s ease,
+    transform 0.55s ease;
+  transition-delay: var(--delay);
+}
+
+.finalist.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.finalist-number {
+  color: var(--marigold);
+  font-family: 'Sora', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.04em;
+}
+
+.finalist-name {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  color: var(--text);
+  font-family: 'Sora', sans-serif;
+  font-size: clamp(15px, 1.5vw, 18px);
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: 0;
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.finalist:hover .finalist-number {
+  color: var(--magenta);
+}
+
+.finalist:hover .finalist-name {
+  color: var(--marigold);
+  transform: translateX(5px);
+}
+
+.ticket-notice {
+  justify-content: center;
+  margin-top: 40px;
 }
 
 /* =========================================================
@@ -1065,8 +1292,73 @@ section.alt {
 }
 
 /* =========================================================
-   CHOREOGRAPHERS
+   WORKSHOPS
 ========================================================= */
+
+.coming-soon-badge {
+  display: inline-block;
+  padding: 7px 16px;
+  border: 1px solid rgba(242, 169, 58, 0.4);
+  border-radius: 999px;
+  color: var(--marigold);
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.section-locked {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius);
+}
+
+.section-locked .locked-content {
+  filter: blur(5px) saturate(0.7);
+  opacity: 0.55;
+  pointer-events: none;
+  user-select: none;
+}
+
+.section-locked .locked-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 20px;
+  text-align: center;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(5, 5, 5, 0.25),
+      rgba(5, 5, 5, 0.6)
+    );
+}
+
+.section-locked .locked-overlay .cs-icon {
+  font-size: 26px;
+}
+
+.section-locked .locked-overlay b {
+  color: #fff8eb;
+  font-family: 'Sora', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 0 #000;
+}
+
+.section-locked .locked-overlay p {
+  max-width: 320px;
+  margin: 0;
+  color: rgba(245, 239, 228, 0.85);
+  font-size: 13.5px;
+}
 
 .choreo-list {
   margin-bottom: 8px;
@@ -1194,10 +1486,6 @@ section.alt {
     box-shadow 0.25s ease;
 }
 
-/* ---------------------------------------------------------
-   Logo images — BLACK & WHITE DEFAULT
---------------------------------------------------------- */
-
 .partner-logos .ph-block img {
   display: block;
   width: 100%;
@@ -1215,10 +1503,6 @@ section.alt {
     transform 0.3s ease;
 }
 
-/* ---------------------------------------------------------
-   Partner card hover
---------------------------------------------------------- */
-
 .partner-logos .ph-block:hover {
   transform: translateY(-4px);
   border-color: var(--marigold);
@@ -1228,19 +1512,11 @@ section.alt {
     0 0 18px rgba(242, 169, 58, 0.08);
 }
 
-/* ---------------------------------------------------------
-   Logo Color Hover
---------------------------------------------------------- */
-
 .partner-logos .ph-block:hover img {
   filter: grayscale(0%) brightness(1);
   opacity: 1;
   transform: scale(1);
 }
-
-/* ---------------------------------------------------------
-   Reveal animation
---------------------------------------------------------- */
 
 .partner-logos.reveal {
   transition:
@@ -1278,9 +1554,9 @@ section.alt {
   transform: translateY(-4px);
 }
 
-/* =========================================================
-   PARTNER CTA
-========================================================= */
+/* ---------------------------------------------------------
+   Partner CTA
+--------------------------------------------------------- */
 
 @keyframes ctaPulse {
   0%,
@@ -1310,7 +1586,6 @@ section.alt {
       rgba(242, 169, 58, 0.10),
       rgba(228, 72, 122, 0.06)
     );
-
   opacity: 0;
   transform: translateY(18px);
   transition:
@@ -1419,12 +1694,31 @@ section.alt {
 }
 
 .social-list .ic {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 34px;
   height: 34px;
   flex: none;
   border: 1px solid var(--line);
   border-radius: 50%;
   background: var(--surface);
+  color: var(--text-muted);
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.social-list .ic svg {
+  width: 16px;
+  height: 16px;
+}
+
+.social-list a:hover .ic {
+  color: var(--marigold);
+  border-color: var(--marigold);
+  background: rgba(242, 169, 58, 0.06);
 }
 
 /* =========================================================
@@ -1511,7 +1805,6 @@ footer .note {
   .hero-flags {
     max-width: 340px;
     margin: 0 auto 20px;
-
     font-size: 12px;
     line-height: 1.8;
   }
@@ -1529,8 +1822,8 @@ footer .note {
   .hero-sub {
     max-width: 500px;
     margin-top: 20px;
-    font-size: 15px;
-    line-height: 1.65;
+    font-size: 14px;
+    line-height: 1.7;
   }
 
   .hero-cta {
@@ -1563,8 +1856,9 @@ footer .note {
   }
 
   .hero-media {
-    height: 220px;
-    margin-top: 28px;
+    height: 180px;
+    max-width: 480px;
+    margin-top: 26px;
   }
 
   /* -------------------------------------------------------
@@ -1627,7 +1921,6 @@ footer .note {
   .winner-cols {
     display: flex;
     flex-direction: row;
-
     transition: transform 0.4s ease;
   }
 
@@ -1649,6 +1942,29 @@ footer .note {
 
   .ticket-tiers {
     grid-template-columns: 1fr;
+  }
+
+  /* -------------------------------------------------------
+     Finalists
+  ------------------------------------------------------- */
+
+  .finalists-heading {
+    margin-bottom: 36px;
+  }
+
+  .finalists-list {
+    grid-template-columns: 1fr;
+    column-gap: 0;
+    max-width: 700px;
+  }
+
+  .finalist {
+    grid-template-columns: 36px minmax(0, 1fr);
+    min-height: 68px;
+  }
+
+  .finalist-name {
+    font-size: 16px;
   }
 
   /* -------------------------------------------------------
@@ -1749,7 +2065,7 @@ footer .note {
   }
 
   /* -------------------------------------------------------
-     Jeepney placard mobile
+     Section Headers
   ------------------------------------------------------- */
 
   .section-head .eyebrow {
@@ -1762,12 +2078,34 @@ footer .note {
       inset 0 1px 0 rgba(255, 255, 255, 0.08);
   }
 
-  .section-head .eyebrow::before {
-    left: 6px;
+  /* -------------------------------------------------------
+     Finalists
+  ------------------------------------------------------- */
+
+  .finalists-heading {
+    margin-bottom: 30px;
   }
 
-  .section-head .eyebrow::after {
-    right: 6px;
+  .finalists-heading .eyebrow {
+    padding: 9px 18px 8px;
+    font-size: clamp(18px, 6vw, 24px);
+  }
+
+  .finalists-list {
+    margin-top: 0;
+  }
+
+  .finalist {
+    grid-template-columns: 32px minmax(0, 1fr);
+    min-height: 64px;
+  }
+
+  .finalist-number {
+    font-size: 10px;
+  }
+
+  .finalist-name {
+    font-size: 15px;
   }
 
   /* -------------------------------------------------------
@@ -1791,5 +2129,22 @@ footer .note {
 
   .partner-logos .ph-block:hover img {
     transform: scale(1);
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .finalist {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .finalist-name {
+    transition: none;
   }
 }

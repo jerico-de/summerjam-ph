@@ -96,3 +96,74 @@
   }, {threshold:.25});
   entries.forEach(function(entry){ io.observe(entry); });
 })();
+
+// Finalists
+const finalists = [
+  "And Friends",
+  "Autonomicass Crew",
+  "Balinsasayaw Vibes",
+  "Beyond the Box",
+  "Bon Appétit",
+  "CLA",
+  "Chronophile",
+  "D’Chimpz",
+  "Euphrosyne",
+  "EX-MOB",
+  "Femme MNL",
+  "Foot Forward",
+  "INCOGNITO",
+  "KOMPLEX",
+  "Kreativ Koncept",
+  "League of Monsters",
+  "Legit Status",
+  "Mendez Dance Company",
+  "NEW GENERATION IMPACT",
+  "Nomads",
+  "NOCTURNAL DANCE COMPANY",
+  "Oxycrew",
+  "PRIDERISE",
+  "Psycho",
+  "STREET CREW 04",
+  "STREET MOVERS",
+  "The Hoodz",
+  "Thy Kingdom",
+  "UNISTARZ"
+];
+
+const finalistsList = document.getElementById("finalistsList");
+
+if (finalistsList) {
+  finalists.forEach((team, index) => {
+    const finalist = document.createElement("div");
+
+    finalist.className = "finalist";
+    finalist.style.setProperty(
+      "--delay",
+      `${index * 60}ms`
+    );
+
+    finalist.innerHTML = `
+      <span class="finalist-number">
+        ${String(index + 1).padStart(2, "0")}
+      </span>
+
+      <span class="finalist-name">
+        ${team}
+      </span>
+    `;
+
+    finalistsList.appendChild(finalist);
+  });
+
+  var finalistsIO = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        entry.target.querySelectorAll('.finalist').forEach(function(row){
+          row.classList.add('in-view');
+        });
+        finalistsIO.unobserve(entry.target);
+      }
+    });
+  }, {threshold:.2});
+  finalistsIO.observe(finalistsList);
+}
