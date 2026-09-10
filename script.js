@@ -130,40 +130,204 @@ const finalists = [
   "UNISTARZ"
 ];
 
-const finalistsList = document.getElementById("finalistsList");
+(function(){
+  var finalistsList = document.getElementById('finalistsList');
+  var toggleBtn = document.getElementById('finalistsToggle');
+  if(!finalistsList || !toggleBtn) return;
 
-if (finalistsList) {
-  finalists.forEach((team, index) => {
-    const finalist = document.createElement("div");
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var mode = 'preview';
+  var rotateTimer = null;
 
-    finalist.className = "finalist";
-    finalist.style.setProperty(
-      "--delay",
-      `${index * 60}ms`
-    );
+  function buildHTML(items){
+    return items.map(function(item){
+      return (
+        '<div class="finalist in-view">' +
+          '<span class="finalist-number">' + String(item.num).padStart(2, '0') + '</span>' +
+          '<span class="finalist-name">' + item.name + '</span>' +
+        '</div>'
+      );
+    }).join('');
+  }
 
-    finalist.innerHTML = `
-      <span class="finalist-number">
-        ${String(index + 1).padStart(2, "0")}
-      </span>
+  function sample(n){
+    var pool = finalists.map(function(name, i){ return { name: name, num: i + 1 }; });
+    for(var i = pool.length - 1; i > 0; i--){
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = pool[i]; pool[i] = pool[j]; pool[j] = tmp;
+    }
+    return pool.slice(0, n);
+  }
 
-      <span class="finalist-name">
-        ${team}
-      </span>
-    `;
+  function crossfade(items){
+    finalistsList.style.opacity = 0;
+    setTimeout(function(){
+      finalistsList.innerHTML = buildHTML(items);
+      finalistsList.style.opacity = 1;
+    }, 250);
+  }
 
-    finalistsList.appendChild(finalist);
+  function showPreview(initial){
+    var picks = sample(4);
+    if(initial){
+      finalistsList.innerHTML = buildHTML(picks);
+    } else {
+      crossfade(picks);
+    }
+  }
+
+  function showFull(){
+    var all = finalists.map(function(name, i){ return { name: name, num: i + 1 }; });
+    crossfade(all);
+  }
+
+  function startRotation(){
+    if(reduceMotion) return;
+    rotateTimer = setInterval(function(){ showPreview(false); }, 2600);
+  }
+
+  function stopRotation(){
+    clearInterval(rotateTimer);
+    rotateTimer = null;
+  }
+
+  // init
+  finalistsList.classList.remove('is-full');
+  showPreview(true);
+  startRotation();
+
+  toggleBtn.addEventListener('click', function(){
+    if(mode === 'preview'){
+      mode = 'full';
+      stopRotation();
+      finalistsList.classList.add('is-full');
+      showFull();
+      toggleBtn.textContent = 'Show less';
+    } else {
+      mode = 'preview';
+      finalistsList.classList.remove('is-full');
+      showPreview(false);
+      startRotation();
+      toggleBtn.textContent = 'View full list';
+    }
   });
+})();
 
-  var finalistsIO = new IntersectionObserver(function(entries){
+// Hero countdown
+(function(){
+  var el = document.getElementById('heroCountdown');
+  if(!el) return;
+
+  var target = new Date(el.dataset.target).getTime();
+  var daysEl = el.querySelector('[data-unit="days"]');
+  var hoursEl = el.querySelector('[data-unit="hours"]');
+  var minsEl = el.querySelector('[data-unit="minutes"]');
+  var secsEl = el.querySelector('[data-unit="seconds"]');
+
+  function pad(n){ return String(n).padStart(2, '0'); }
+
+  function tick(){
+    var diff = target - Date.now();
+
+    if(diff <= 0){
+      daysEl.textContent = hoursEl.textContent = minsEl.textContent = secsEl.textContent = '00';
+      clearInterval(timer);
+      return;
+    }
+
+    var days = Math.floor(diff / 86400000);
+    var hours = Math.floor((diff % 86400000) / 3600000);
+    var mins = Math.floor((diff % 3600000) / 60000);
+    var secs = Math.floor((diff % 60000) / 1000);
+
+    daysEl.textContent = pad(days);
+    hoursEl.textContent = pad(hours);
+    minsEl.textContent = pad(mins);
+    secsEl.textContent = pad(secs);
+  }
+
+  var timer = setInterval(tick, 1000);
+  tick();
+})();
+
+// Sponsor highlights — count-up on scroll into view
+(function(){
+  var section = document.getElementById('sponsorHighlights');
+  if(!section) return;
+
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var nums = section.querySelectorAll('.sf-num[data-count]');
+
+  function animateCount(el){
+    var target = parseInt(el.dataset.count, 10);
+    var prefix = el.dataset.prefix || '';
+    var suffix = el.dataset.suffix || '';
+
+    if(reduceMotion){
+      el.textContent = prefix + target.toLocaleString() + suffix;
+      return;
+    }
+
+    var duration = 1400;
+    var start = null;
+
+    function step(ts){
+      if(start === null) start = ts;
+      var progress = Math.min((ts - start) / duration, 1);
+      var eased = 1 - Math.pow(1 - progress, 3);
+      var current = Math.round(eased * target);
+      el.textContent = prefix + current.toLocaleString() + suffix;
+      if(progress < 1) requestAnimationFrame(step);
+    }
+
+    requestAnimationFrame(step);
+  }
+
+  var io = new IntersectionObserver(function(entries){
     entries.forEach(function(entry){
       if(entry.isIntersecting){
-        entry.target.querySelectorAll('.finalist').forEach(function(row){
-          row.classList.add('in-view');
-        });
-        finalistsIO.unobserve(entry.target);
+        nums.forEach(animateCount);
+        io.unobserve(entry.target);
       }
     });
-  }, {threshold:.2});
-  finalistsIO.observe(finalistsList);
-}
+  }, { threshold: 0.4 });
+
+  io.observe(section);
+})();
+
+// Nav scroll-spy — highlight current section's nav link (desktop + mobile menu)
+(function(){
+  var navLinks = document.querySelectorAll('.navlinks a, .mobile-menu a');
+  if(!navLinks.length) return;
+
+  var uniqueIds = [];
+  navLinks.forEach(function(link){
+    var id = link.getAttribute('href').slice(1);
+    if(uniqueIds.indexOf(id) === -1) uniqueIds.push(id);
+  });
+
+  var sections = uniqueIds.map(function(id){
+    return document.getElementById(id);
+  }).filter(Boolean);
+
+  if(!sections.length) return;
+
+  function setActive(id){
+    navLinks.forEach(function(link){
+      link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+    });
+  }
+
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        setActive(entry.target.id);
+      }
+    });
+  }, {
+    rootMargin: '-45% 0px -50% 0px',
+    threshold: 0
+  });
+
+  sections.forEach(function(section){ io.observe(section); });
+})();

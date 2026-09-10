@@ -75,35 +75,31 @@
         from international and national choreographers.
       </p>
 
+      <div class="hero-countdown" id="heroCountdown" data-target="2026-10-24T09:00:00+08:00">
+        <div class="cd-unit">
+          <span class="cd-num" data-unit="days">00</span>
+          <span class="cd-lbl">Days</span>
+        </div>
+        <div class="cd-line"></div>
+        <div class="cd-unit">
+          <span class="cd-num" data-unit="hours">00</span>
+          <span class="cd-lbl">Hours</span>
+        </div>
+        <div class="cd-line"></div>
+        <div class="cd-unit">
+          <span class="cd-num" data-unit="minutes">00</span>
+          <span class="cd-lbl">Minutes</span>
+        </div>
+        <div class="cd-line"></div>
+        <div class="cd-unit">
+          <span class="cd-num" data-unit="seconds">00</span>
+          <span class="cd-lbl">Seconds</span>
+        </div>
+      </div>
+
       <div class="hero-cta">
         <a class="btn btn-primary" href="#competition">Get tickets</a>
         <a class="btn btn-ghost" href="#about">Learn more</a>
-      </div>
-
-      <div class="hero-stats">
-        <div class="hero-stat">
-          <span class="stat-icon">01</span>
-          <div>
-            <span class="num">Oct 24–25</span>
-            <span class="lbl">UP Theater · Bawz Complex</span>
-          </div>
-        </div>
-
-        <div class="hero-stat">
-          <span class="stat-icon">02</span>
-          <div>
-            <span class="num">2-day</span>
-            <span class="lbl">Competition + Workshops</span>
-          </div>
-        </div>
-
-        <div class="hero-stat">
-          <span class="stat-icon">03</span>
-          <div>
-            <span class="num">Vol. 3</span>
-            <span class="lbl">Philippine Qualifier</span>
-          </div>
-        </div>
       </div>
 
       <div class="hero-media ph-block">
@@ -123,7 +119,7 @@
       <div class="about-list">
         <div class="about-entry">
           <div class="entry-media compact">
-            <div class="ph-block round">
+            <div class="ph-block">
               <img src="assets/exti.png" alt="Exxtii Photo">
             </div>
           </div>
@@ -211,7 +207,7 @@
 
         <div class="about-entry">
           <div class="entry-media compact">
-            <div class="ph-block round">
+            <div class="ph-block">
               <img src="assets/aennon.jpeg" alt="Aennon Picture">
             </div>
           </div>
@@ -423,10 +419,6 @@
             the Philippines at the SJSC Finals in Da Nang, Vietnam.
           </p>
 
-          <div class="competition-status">
-            <span class="status-dot"></span>
-            Finalists announced below
-          </div>
         </div>
       </div>
 
@@ -435,7 +427,13 @@
           <div class="eyebrow">Finalists</div>
         </div>
 
-        <div class="finalists-list reveal" id="finalistsList"></div>
+        <div class="finalists-list" id="finalistsList"></div>
+
+        <div class="finalists-toggle reveal">
+          <button class="btn btn-outline" id="finalistsToggle" type="button">
+            View full list
+          </button>
+        </div>
       </div>
 
       <div class="ticket-notice reveal">
@@ -534,7 +532,7 @@
         <div class="locked-overlay">
           <span class="cs-icon">🔒</span>
           <b>Coming soon</b>
-          <p>Choreographer lineup and passes will be announced shortly.</p>
+          <p>Choreographer lineup and passes will be announced soon. Stay tuned!</p>
         </div>
       </div>
     </div>
@@ -608,7 +606,7 @@
         <div class="locked-overlay">
           <span class="cs-icon">🔒</span>
           <b>Coming soon</b>
-          <p>Merch lineup and pre-orders will be announced shortly.</p>
+          <p>Merch lineup and pre-orders will be announced soon. Stay tuned!</p>
         </div>
       </div>
     </div>
@@ -625,6 +623,69 @@
           community. We value long-term partnerships and meaningful
           collaborations that create lasting opportunities for dancers.
         </p>
+      </div>
+
+      <div class="sponsor-facts reveal" id="sponsorHighlights">
+
+        <div class="sf-heading">
+          <span class="sf-kicker">By the numbers</span>
+          <h3 class="sf-title">Why Partner With SJSC</h3>
+        </div>
+
+        <div class="sf-cards">
+
+          <div class="sf-card">
+            <span class="sf-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="9" cy="8" r="3"/>
+                <path d="M3 20c0-3 2.7-5 6-5s6 2 6 5"/>
+                <circle cx="17" cy="9" r="2.4"/>
+                <path d="M14.5 20c.3-2.2 2-3.8 4-3.8 1.9 0 3.5 1.2 4 3"/>
+              </svg>
+            </span>
+            <div class="sf-num" data-count="1700" data-suffix="+">0</div>
+            <div class="sf-lbl">Projected Attendees</div>
+            <p class="sf-sub">Dancers, students &amp; audience expected on-site</p>
+          </div>
+
+          <div class="sf-card">
+            <span class="sf-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="3.5" y="4" width="17" height="13" rx="1.5"/>
+                <path d="M8 21h8M12 17v4"/>
+              </svg>
+            </span>
+            <div class="sf-num" data-prefix="25–" data-count="30">0</div>
+            <div class="sf-lbl">Competing Teams</div>
+            <p class="sf-sub">Dance crews traveling in from across the country</p>
+          </div>
+
+          <div class="sf-card">
+            <span class="sf-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M3 12a9 9 0 0 1 18 0"/>
+                <path d="M3 12h4M17 12h4M12 3v4"/>
+                <circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"/>
+              </svg>
+            </span>
+            <div class="sf-num sf-num-text">High</div>
+            <div class="sf-lbl">Brand Visibility</div>
+            <p class="sf-sub">Direct, high-impact engagement with the audience</p>
+          </div>
+
+          <div class="sf-card">
+            <span class="sf-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M12 3l2.4 5 5.6.6-4.2 3.8 1.2 5.6L12 15l-5 3 1.2-5.6L4 8.6 9.6 8z"/>
+              </svg>
+            </span>
+            <div class="sf-num sf-num-text">Exclusive</div>
+            <div class="sf-lbl">Creative Access</div>
+            <p class="sf-sub">Collaborations with industry-leading choreographers</p>
+          </div>
+
+        </div>
+
       </div>
 
       <h3>Sponsors</h3>
@@ -690,7 +751,7 @@
           </a>
 
           <div class="who">
-            Or call <b>Qiuting Cai</b> · 0917 188 8666
+            Or contact <b>Qiuting Cai</b> · 0917 188 8666
           </div>
         </div>
       </div>
