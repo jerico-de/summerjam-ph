@@ -331,3 +331,100 @@ const finalists = [
 
   sections.forEach(function(section){ io.observe(section); });
 })();
+
+// Hero flags — rotate through items with sideways swoosh (mobile only)
+(function(){
+  var container = document.querySelector('.hero-flags');
+  if(!container) return;
+
+  var items = container.querySelectorAll('b');
+  if(items.length < 2) return;
+
+  var mq = window.matchMedia('(max-width: 820px)');
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var idx = 0;
+  var timer = null;
+
+  function clearStates(){
+    items.forEach(function(item){
+      item.classList.remove('active', 'exit');
+    });
+  }
+
+  function resetToFirst(){
+    clearStates();
+    items[0].classList.add('active');
+    idx = 0;
+  }
+
+  function rotate(){
+    var current = items[idx];
+    var nextIdx = (idx + 1) % items.length;
+    var next = items[nextIdx];
+
+    current.classList.remove('active');
+    current.classList.add('exit');
+
+    next.classList.remove('exit');
+    void next.offsetWidth;
+    next.classList.add('active');
+
+    setTimeout(function(){
+      current.classList.remove('exit');
+    }, 450);
+
+    idx = nextIdx;
+  }
+
+  function start(){
+    if(timer) return;
+    timer = setInterval(rotate, 3000);
+  }
+
+  function stop(){
+    clearInterval(timer);
+    timer = null;
+  }
+
+  function apply(){
+    if(mq.matches && !reduceMotion){
+      resetToFirst();
+      start();
+    } else {
+      stop();
+      clearStates();
+    }
+  }
+
+  mq.addEventListener('change', apply);
+  apply();
+})();
+
+// Back to top button
+(function(){
+  var btn = document.getElementById('backToTop');
+  if(!btn) return;
+
+  var hero = document.querySelector('header.hero');
+  var threshold = hero ? hero.offsetHeight : 600;
+
+  function toggle(){
+    btn.classList.toggle('visible', window.scrollY > threshold);
+  }
+
+  btn.addEventListener('click', function(){
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  window.addEventListener('scroll', toggle, { passive: true });
+  toggle();
+})();
+
+// YouTube facade — only load iframe on click
+document.querySelectorAll('.yt-facade').forEach(function(el){
+  el.addEventListener('click', function(){
+    var id = el.dataset.ytId;
+    el.innerHTML = '<iframe src="https://www.youtube.com/embed/' + id + '?autoplay=1" ' +
+      'allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe>';
+  }, { once: true });
+});

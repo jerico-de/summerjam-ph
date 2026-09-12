@@ -117,6 +117,7 @@ h4 {
 ========================================================= */
 
 .btn {
+  position: relative;
   display: inline-block;
   padding: 11px 22px;
   border: 1px solid transparent;
@@ -125,21 +126,49 @@ h4 {
   font-size: 14.5px;
   font-weight: 600;
   cursor: pointer;
+  overflow: hidden;
   transition:
-    opacity 0.15s ease,
-    transform 0.15s ease,
-    border-color 0.15s ease,
-    background-color 0.15s ease;
-}
-
-.btn:hover {
-  opacity: 0.88;
-  transform: translateY(-2px);
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    background-color 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
 .btn-primary {
   background: var(--marigold);
   color: #241505;
+  box-shadow: 0 0 0 0 rgba(242, 169, 58, 0);
+}
+
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 55%;
+  height: 100%;
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.15) 50%,
+    transparent 100%
+  );
+  transform: skewX(-15deg);
+  pointer-events: none;
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 10px 26px rgba(242, 169, 58, 0.28);
+}
+
+.btn-primary:hover::after {
+  animation: btnSweep 0.6s ease forwards;
+}
+
+@keyframes btnSweep {
+  from { left: -120%; }
+  to   { left: 160%; }
 }
 
 .btn-ghost {
@@ -147,9 +176,37 @@ h4 {
   color: var(--text);
 }
 
+.btn-ghost:hover {
+  border-color: var(--marigold);
+  background: rgba(242, 169, 58, 0.08);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.25);
+}
+
 .btn-outline {
   border-color: var(--line);
   color: var(--text-muted);
+}
+
+.btn-outline:hover {
+  border-color: var(--marigold);
+  color: var(--marigold);
+  transform: translateY(-2px);
+}
+
+/* =========================================================
+   GRAIN OVERLAY
+========================================================= */
+
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
 }
 
 /* =========================================================
@@ -169,6 +226,7 @@ nav .wrap {
   align-items: center;
   justify-content: space-between;
   min-height: 68px;
+  max-width: 1200px;
 }
 
 .logo-mark {
@@ -264,15 +322,27 @@ nav .wrap {
 }
 
 .mobile-menu {
-  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 19;
+  display: flex;
   flex-direction: column;
-  padding: 8px 32px 20px;
+  max-height: 0;
+  padding: 0 32px;
+  overflow: hidden;
   background: #08080a;
   border-bottom: 1px solid var(--line);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.35);
+  transition:
+    max-height 0.3s ease,
+    padding 0.3s ease;
 }
 
 .mobile-menu.open {
-  display: flex;
+  max-height: 500px;
+  padding: 8px 32px 20px;
 }
 
 .mobile-menu a {
@@ -458,7 +528,6 @@ header.hero {
   box-shadow:
     0 20px 50px rgba(0, 0, 0, 0.4),
     inset 0 1px 0 rgba(255, 255, 255, 0.03);
-  animation: fadeUp 0.7s ease 0.25s both;
 }
 
 .cd-unit {
@@ -489,6 +558,27 @@ header.hero {
   width: 1px;
   height: 30px;
   background: var(--line);
+}
+
+@keyframes countdownPulse {
+  0%, 100% {
+    box-shadow:
+      0 20px 50px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.03),
+      0 0 0 0 rgba(242, 169, 58, 0);
+  }
+  50% {
+    box-shadow:
+      0 20px 50px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.192),
+      0 0 30px 2px rgba(242, 168, 58, 0.36);
+  }
+}
+
+.hero-countdown {
+  animation:
+    fadeUp 0.7s ease 0.25s both,
+    countdownPulse 3.6s ease-in-out 1s infinite;
 }
 
 /* -----------------------------------------------------------
@@ -668,7 +758,7 @@ section.alt {
 .section-head::before {
   content: '';
   order: 2;
-  width: 72px;
+  width: 0;
   height: 3px;
   margin-top: 22px;
   border-radius: 2px;
@@ -680,6 +770,11 @@ section.alt {
       var(--purple)
     );
   box-shadow: 0 0 12px rgba(242, 169, 58, 0.15);
+  transition: width 0.7s ease 0.15s;
+}
+
+.section-head.in-view::before {
+  width: 85px;
 }
 
 .section-head p {
@@ -761,6 +856,9 @@ section.alt {
   aspect-ratio: 3 / 2;
   overflow: hidden;
   padding: 0;
+  border: none;
+  border-radius: var(--radius);
+  background: none;
 }
 
 .about-entry .entry-media.compact .ph-block {
@@ -791,8 +889,14 @@ section.alt {
 }
 
 .about-entry .entry-media .ph-block.contain {
-  padding: 20px;
-  background: var(--surface);
+  padding: 0;
+  background: none;
+  border: none;
+}
+
+.about-entry .entry-media .ph-block.contain img {
+  width: 100%;
+  height: 100%;
 }
 
 .about-entry .entry-media .ph-block.contain img {
@@ -860,10 +964,15 @@ section.alt {
 
 .credentials span {
   padding: 5px 11px;
-  border: 1px solid var(--line);
+  border: 1.5px solid rgba(242, 169, 58, 0.45);
   border-radius: 999px;
-  color: var(--text-faint);
+  color: var(--text-muted);
   font-size: 12px;
+  transition: border-color 0.2s ease;
+}
+
+.credentials span:hover {
+  border-color: var(--marigold);
 }
 
 /* =========================================================
@@ -973,10 +1082,14 @@ section.alt {
   content: none;
 }
 
-.winner-vid .dot-play,
-.winner-vid .video-label {
+/* Play button + label overlay — was missing layout rules,
+   which caused misaligned/stacked icon+text */
+.winner-vid .winner-overlay {
   position: relative;
   z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .winner-vid .dot-play {
@@ -1000,10 +1113,10 @@ section.alt {
 }
 
 .winner-vid .video-label {
-  margin-left: 8px;
   color: #fff;
   font-size: 13.5px;
   font-weight: 500;
+  white-space: nowrap;
   transition: transform 0.3s ease;
 }
 
@@ -1095,6 +1208,18 @@ section.alt {
   border-radius: 0;
 }
 
+.event-card .competition-poster {
+  min-height: 240px;
+  padding: 24px;
+}
+
+.event-card .competition-poster img {
+  width: auto;
+  max-width: 60%;
+  max-height: 360px;
+  object-fit: contain;
+}
+
 .event-card .info {
   padding: 34px;
   background: var(--surface);
@@ -1122,26 +1247,135 @@ section.alt {
   font-size: 12.5px;
 }
 
-.ticket-notice {
+/* -----------------------------------------------------------
+   Ticket CTA
+----------------------------------------------------------- */
+
+.ticket-cta {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.ticket-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: fit-content;
+  min-height: 62px;
+  margin: 0 auto;
+  padding: 15px 20px;
+  border: 1px solid rgba(242, 169, 58, 0.28);
+  border-radius: 10px;
+  background: rgba(10, 10, 10, 0.72);
+  color: var(--text);
+  cursor: pointer;
+  overflow: hidden;
+  transition:
+    border-color 0.25s ease,
+    background-color 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.tb-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  margin-top: 40px;
+  flex: 0 0 34px;
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(242, 169, 58, 0.28);
+  border-radius: 8px;
   color: var(--marigold);
-  font-size: 12.5px;
-  font-weight: 600;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
+  background: rgba(242, 168, 58, 0.185);
+  transition:
+    border-color 0.25s ease,
+    background-color 0.25s ease,
+    color 0.25s ease;
 }
 
-.ticket-notice .status-dot {
-  width: 7px;
-  height: 7px;
-  flex: 0 0 7px;
-  border-radius: 50%;
-  background: var(--marigold);
-  box-shadow: 0 0 10px rgba(242, 169, 58, 0.5);
+.tb-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.tb-text {
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+}
+
+.tb-arrow {
+  margin-left: 4px;
+  color: var(--marigold);
+  font-size: 17px;
+  line-height: 1;
+  transition:
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.ticket-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 55%;
+  height: 100%;
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.025) 30%,
+    rgba(255, 255, 255, 0.10) 50%,
+    rgba(255, 255, 255, 0.025) 70%,
+    transparent 100%
+  );
+  transform: skewX(-15deg);
+  pointer-events: none;
+}
+
+.ticket-card:hover,
+.ticket-card:focus-visible {
+  border-color: rgba(242, 169, 58, 0.65);
+  background: rgba(242, 169, 58, 0.08);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.28);
+  transform: translateY(-2px);
+}
+
+.ticket-card:hover .tb-icon,
+.ticket-card:focus-visible .tb-icon {
+  border-color: rgba(242, 169, 58, 0.55);
+  background: rgba(242, 169, 58, 0.12);
+}
+
+.ticket-card:hover .tb-arrow,
+.ticket-card:focus-visible .tb-arrow {
+  color: var(--magenta);
+  transform: translateX(4px);
+}
+
+.ticket-card:hover::after {
+  animation: ticketSweep 0.55s ease forwards;
+}
+
+@keyframes ticketSweep {
+  from {
+    left: -120%;
+  }
+
+  to {
+    left: 160%;
+  }
+}
+
+.ticket-card:focus-visible {
+  outline: 2px solid var(--marigold);
+  outline-offset: 3px;
 }
 
 /* =========================================================
@@ -1274,11 +1508,6 @@ section.alt {
   display: flex;
   justify-content: center;
   margin-top: 32px;
-}
-
-.finalists-toggle .btn-outline:hover {
-  border-color: var(--marigold);
-  color: var(--marigold);
 }
 
 /* =========================================================
@@ -1853,20 +2082,147 @@ section.alt {
 ========================================================= */
 
 footer {
-  padding: 36px 0;
+  padding-top: 56px;
   border-top: 1px solid var(--line);
+  background: var(--bg-alt);
 }
 
-footer .wrap {
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr 1fr;
+  gap: 32px;
+  padding-bottom: 40px;
+}
+
+.footer-brand .footer-logo {
+  margin-bottom: 10px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.footer-tagline {
+  max-width: 260px;
+  margin: 0;
+  color: var(--text-faint);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.footer-col {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footer-heading {
+  margin-bottom: 4px;
+  color: var(--text-faint);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.footer-col a {
+  color: var(--text-muted);
+  font-size: 14px;
+  transition: color 0.2s ease;
+}
+
+.footer-col a:hover {
+  color: var(--marigold);
+}
+
+.footer-socials {
+  display: flex;
+  gap: 10px;
+}
+
+.footer-socials a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  color: var(--text-muted);
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.footer-socials a svg {
+  width: 14px;
+  height: 14px;
+}
+
+.footer-socials a:hover {
+  color: var(--marigold);
+  border-color: var(--marigold);
+  background: rgba(242, 169, 58, 0.06);
+}
+
+.footer-bottom {
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 10px;
+  padding: 20px 32px;
+  border-top: 1px solid var(--line);
 }
 
-footer .note {
+.footer-bottom .note {
   color: var(--text-faint);
+  font-size: 12.5px;
+}
+
+/* =========================================================
+   BACK TO TOP
+========================================================= */
+
+.back-to-top {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.35);
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.back-to-top.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.back-to-top:hover {
+  border-color: var(--marigold);
+  color: var(--marigold);
+}
+
+.back-to-top svg {
+  width: 18px;
+  height: 18px;
 }
 
 /* =========================================================
@@ -1930,14 +2286,38 @@ footer .note {
   }
 
   .hero-flags {
-    max-width: 340px;
-    margin: 0 auto 20px;
-    font-size: 12px;
-    line-height: 1.8;
+    position: relative;
+    height: 20px;
+    overflow: hidden;
   }
 
   .hero-flags .dot {
-    margin: 0 4px;
+    display: none;
+  }
+
+  .hero-flags b {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    opacity: 0;
+    transform: translateX(40px);
+    transition:
+      opacity 0.45s ease,
+      transform 0.45s ease;
+    pointer-events: none;
+  }
+
+  .hero-flags b.active {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+  }
+
+  .hero-flags b.exit {
+    opacity: 0;
+    transform: translateX(-40px);
   }
 
   .hero h1 {
@@ -2057,11 +2437,13 @@ footer .note {
   .winner-cols {
     display: flex;
     flex-direction: row;
+    gap: 0;
     transition: transform 0.4s ease;
   }
 
   .winner-cols > div {
     flex: 0 0 100%;
+    width: 100%;
   }
 
   .winner-controls {
@@ -2079,6 +2461,10 @@ footer .note {
 
   .event-card {
     grid-template-columns: 1fr;
+  }
+
+  .event-card .competition-poster {
+    display: none;
   }
 
   .ticket-tiers {
@@ -2160,6 +2546,24 @@ footer .note {
     align-items: flex-start;
     flex-direction: column;
   }
+
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+  }
+
+  .footer-brand {
+    grid-column: 1 / -1;
+  }
+
+  .footer-tagline {
+    max-width: 100%;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 
 /* =========================================================
@@ -2178,6 +2582,11 @@ footer .note {
 
   header.hero {
     padding-top: 64px;
+  }
+
+  .hero-sub {
+  font-size: 12.5px;
+  line-height: 1.6;
   }
 
   .hero-flags {
@@ -2250,6 +2659,21 @@ footer .note {
     font-size: 15px;
   }
 
+  .ticket-card {
+    width: 100%;
+    min-height: 60px;
+    padding: 14px 16px;
+  }
+
+  .tb-text {
+    white-space: normal;
+    text-align: left;
+  }
+
+  .tb-arrow {
+    margin-left: auto;
+  }
+
   .partner-logos {
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
@@ -2268,6 +2692,17 @@ footer .note {
   .partner-logos .ph-block:hover img {
     transform: scale(1);
   }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .back-to-top {
+    right: 16px;
+    bottom: 16px;
+    width: 40px;
+    height: 40px;
+  }
 }
 
 /* =========================================================
@@ -2284,5 +2719,9 @@ footer .note {
 
   .finalist-name {
     transition: none;
+  }
+
+  .hero-countdown {
+    animation: none;
   }
 }
