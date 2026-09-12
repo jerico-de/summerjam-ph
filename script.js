@@ -400,26 +400,6 @@ const finalists = [
   apply();
 })();
 
-// Back to top button
-(function(){
-  var btn = document.getElementById('backToTop');
-  if(!btn) return;
-
-  var hero = document.querySelector('header.hero');
-  var threshold = hero ? hero.offsetHeight : 600;
-
-  function toggle(){
-    btn.classList.toggle('visible', window.scrollY > threshold);
-  }
-
-  btn.addEventListener('click', function(){
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-
-  window.addEventListener('scroll', toggle, { passive: true });
-  toggle();
-})();
-
 // YouTube facade — only load iframe on click
 document.querySelectorAll('.yt-facade').forEach(function(el){
   el.addEventListener('click', function(){
@@ -428,3 +408,125 @@ document.querySelectorAll('.yt-facade').forEach(function(el){
       'allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe>';
   }, { once: true });
 });
+
+// Key visual modal — shows once on first visit, reopenable via trigger icon
+(function(){
+  var modal = document.getElementById('kvModal');
+  var trigger = document.getElementById('kvTrigger');
+  if(!modal || !trigger) return;
+
+  var STORAGE_KEY = 'sjsc-kv-seen';
+
+  function openModal(){
+    modal.classList.remove('hidden', 'closing');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal(){
+    modal.classList.add('closing');
+    document.body.style.overflow = '';
+    setTimeout(function(){
+      modal.classList.add('hidden');
+    }, 350);
+  }
+
+  // Modal pop up per browser session
+  var alreadySeen = false;
+  try {
+    alreadySeen = localStorage.getItem(STORAGE_KEY) === '1';
+  } catch(e) {
+    alreadySeen = false;
+  }
+
+  if(!alreadySeen){
+    openModal();
+    try { localStorage.setItem(STORAGE_KEY, '1'); } catch(e) {}
+  } else {
+    modal.classList.add('hidden');
+  }
+
+  modal.addEventListener('click', closeModal);
+  trigger.addEventListener('click', openModal);
+})();
+
+// Back to top + KV trigger — both appear after scrolling past hero
+(function(){
+  var backBtn = document.getElementById('backToTop');
+  var kvBtn = document.getElementById('kvTrigger');
+  if(!backBtn && !kvBtn) return;
+
+  var hero = document.querySelector('header.hero');
+  var threshold = hero ? hero.offsetHeight : 50;
+
+  function toggle(){
+    var past = window.scrollY > threshold;
+    if(backBtn) backBtn.classList.toggle('visible', past);
+    if(kvBtn) kvBtn.classList.toggle('visible', past);
+  }
+
+  if(backBtn){
+    backBtn.addEventListener('click', function(){
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  window.addEventListener('scroll', toggle, { passive: true });
+  toggle();
+})();
+
+// Smooth eased scrolling for all in-page anchor links
+(function(){
+  var links = document.querySelectorAll('a[href^="#"]');
+  if(!links.length) return;
+
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function easeInOutCubic(t){
+    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  }
+
+  function smoothScrollTo(targetY, duration){
+    var startY = window.scrollY;
+    var distance = targetY - startY;
+    var startTime = null;
+
+    function step(ts){
+      if(startTime === null) startTime = ts;
+      var elapsed = ts - startTime;
+      var progress = Math.min(elapsed / duration, 1);
+      window.scrollTo(0, startY + distance * easeInOutCubic(progress));
+      if(progress < 1) requestAnimationFrame(step);
+    }
+
+    requestAnimationFrame(step);
+  }
+
+  links.forEach(function(link){
+    link.addEventListener('click', function(e){
+      var id = link.getAttribute('href').slice(1);
+      if(!id) return;
+
+      var target = document.getElementById(id);
+      if(!target) return;
+
+      e.preventDefault();
+
+      var navHeight = document.querySelector('nav') ? document.querySelector('nav').offsetHeight : 0;
+      var targetY = target.getBoundingClientRect().top + window.scrollY - navHeight;
+
+      if(reduceMotion){
+        window.scrollTo(0, targetY);
+      } else {
+        smoothScrollTo(targetY, 700);
+      }
+
+      // close mobile menu if open (works alongside your existing toggle logic)
+      var mobileMenu = document.getElementById('mobileMenu');
+      var navToggle = document.getElementById('navToggle');
+      if(mobileMenu && mobileMenu.classList.contains('open')){
+        mobileMenu.classList.remove('open');
+        if(navToggle) navToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  });
+})();
