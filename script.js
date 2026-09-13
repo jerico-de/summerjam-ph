@@ -530,3 +530,82 @@ document.querySelectorAll('.yt-facade').forEach(function(el){
     });
   });
 })();
+
+// Partner logos — mobile carousel
+(function(){
+  var viewports = document.querySelectorAll('.partner-logos-viewport');
+  if(!viewports.length) return;
+
+  var mq = window.matchMedia('(max-width: 820px)');
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  viewports.forEach(function(viewport){
+    var track = viewport.querySelector('.partner-logos');
+    if(!track) return;
+
+    var allLogos = Array.prototype.slice.call(track.children);
+    if(allLogos.length <= 2) return;
+
+    var perView = 2;
+    var page = 0;
+    var totalPages = Math.ceil(allLogos.length / perView);
+    var timer = null;
+
+    function render(pageIndex){
+      var start = pageIndex * perView;
+      var slice = allLogos.slice(start, start + perView);
+      track.innerHTML = '';
+      slice.forEach(function(logo){ track.appendChild(logo); });
+    }
+
+    function next(){
+      track.classList.add('swoosh-exit');
+
+      setTimeout(function(){
+        page = (page + 1) % totalPages;
+        render(page);
+
+        track.classList.remove('swoosh-exit');
+        track.classList.add('swoosh-enter');
+        void track.offsetWidth;
+        track.classList.remove('swoosh-enter');
+      }, 300);
+    }
+
+    function start(){
+      if(timer || reduceMotion) return;
+      timer = setInterval(next, 3000);
+    }
+
+    function stop(){
+      clearInterval(timer);
+      timer = null;
+    }
+
+    function apply(){
+      if(mq.matches){
+        page = 0;
+        render(0);
+        start();
+      } else {
+        stop();
+        track.innerHTML = '';
+        allLogos.forEach(function(logo){ track.appendChild(logo); });
+      }
+    }
+
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          if(mq.matches) start();
+        } else {
+          stop();
+        }
+      });
+    }, { threshold: 0.2 });
+
+    io.observe(viewport);
+    mq.addEventListener('change', apply);
+    apply();
+  });
+})();
