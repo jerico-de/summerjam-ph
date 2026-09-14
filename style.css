@@ -1259,13 +1259,12 @@ section.alt {
   align-items: center;
   gap: 14px;
   width: fit-content;
-  min-height: 62px;
   margin: 0 auto;
   padding: 15px 20px;
-  border: 1px solid rgba(242, 169, 58, 0.45);
+  border: 1px solid transparent;
   border-radius: 10px;
-  background: rgba(242, 169, 58, 0.10);
-  color: var(--text);
+  background: var(--marigold);
+  color: #241505;
   cursor: pointer;
   overflow: hidden;
   transition:
@@ -1282,12 +1281,11 @@ section.alt {
   flex: 0 0 34px;
   width: 34px;
   height: 34px;
-  border: 1px solid rgba(242, 169, 58, 0.45);
+  border: none;
   border-radius: 8px;
   color: var(--marigold);
-  background: rgba(242, 169, 58, 0.20);
+  background: #241505;
   transition:
-    border-color 0.25s ease,
     background-color 0.25s ease,
     color 0.25s ease;
 }
@@ -1298,9 +1296,9 @@ section.alt {
 }
 
 .tb-text {
-  color: var(--text);
+  color: #241505;
   font-family: 'Inter', sans-serif;
-  font-size: 13px;
+  font-size: 14.5px;
   font-weight: 600;
   line-height: 1.4;
   letter-spacing: 0.01em;
@@ -1308,7 +1306,7 @@ section.alt {
 
 .tb-arrow {
   margin-left: 4px;
-  color: var(--marigold);
+  color: #241505;
   font-size: 17px;
   line-height: 1;
   transition:
@@ -1317,7 +1315,7 @@ section.alt {
 }
 
 .ticket-card::after {
-  content: '';
+ content: '';
   position: absolute;
   top: 0;
   left: -120%;
@@ -1326,9 +1324,7 @@ section.alt {
   background: linear-gradient(
     105deg,
     transparent 0%,
-    rgba(255, 255, 255, 0.025) 30%,
-    rgba(255, 255, 255, 0.10) 50%,
-    rgba(255, 255, 255, 0.025) 70%,
+    rgba(255, 255, 255, 0.15) 50%,
     transparent 100%
   );
   transform: skewX(-15deg);
@@ -1337,26 +1333,22 @@ section.alt {
 
 .ticket-card:hover,
 .ticket-card:focus-visible {
-  border-color: var(--marigold);
-  background: rgba(242, 169, 58, 0.22);
-  box-shadow: 0 8px 28px rgba(242, 169, 58, 0.20);
+  opacity: 0.88;
   transform: translateY(-2px);
-}
-
-.ticket-card:hover .tb-icon,
-.ticket-card:focus-visible .tb-icon {
-  border-color: var(--marigold);
-  background: rgba(242, 169, 58, 0.32);
 }
 
 .ticket-card:hover .tb-arrow,
 .ticket-card:focus-visible .tb-arrow {
-  color: var(--magenta);
   transform: translateX(4px);
 }
 
+.ticket-card:focus-visible {
+  outline: 2px solid var(--marigold);
+  outline-offset: 3px;
+}
+
 .ticket-card:hover::after {
-  animation: ticketSweep 0.55s ease forwards;
+  animation: ticketSweep 1.2s ease-in-out both;
 }
 
 @keyframes ticketSweep {
