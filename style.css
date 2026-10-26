@@ -2451,9 +2451,6 @@ footer {
     grid-template-columns: 1fr;
   }
 
-  .event-card .competition-poster {
-    display: none;
-  }
 
   .ticket-tiers {
     grid-template-columns: 1fr;
